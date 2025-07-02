@@ -1,4 +1,4 @@
-package com.sinoptik_.cards.data
+package com.sinoptik_.cards.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

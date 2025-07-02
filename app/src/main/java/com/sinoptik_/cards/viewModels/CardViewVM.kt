@@ -3,7 +3,7 @@ package com.sinoptik_.cards.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sinoptik_.cards.data.FullCard
+import com.sinoptik_.cards.data.dto.FullCard
 import com.sinoptik_.cards.retrofit.Common
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

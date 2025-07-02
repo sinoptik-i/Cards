@@ -10,8 +10,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sinoptik_.cards.ui.theme.CardsTheme
 import com.sinoptik_.cards.view.AllCards
 import com.sinoptik_.cards.view.InputBinScreen
+import com.sinoptik_.cards.view.MainScreen
+import dagger.hilt.android.AndroidEntryPoint
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
 
@@ -21,25 +23,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CardsTheme {
-//                InputBinScreen()
-                AllCards()
+                MainScreen()
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CardsTheme {
-        Greeting("Android")
     }
 }

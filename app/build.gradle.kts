@@ -3,9 +3,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
+    id("androidx.room")
     alias(libs.plugins.ksp)
-//    alias(libs.plugins.hilt)
-//    alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.androidx.navigation.safeargs)
 }
 
 android {
@@ -41,6 +42,10 @@ android {
     buildFeatures {
         compose = true
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
 }
 
 dependencies {
@@ -66,15 +71,16 @@ dependencies {
     implementation(libs.retrofit2.gson.serialization)
 
 //    // room
-//    implementation(libs.androidx.room.runtime)
-//    annotationProcessor(libs.androidx.room.compiler)
-//    implementation(libs.androidx.room.ktx)
-//    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // hilt
-//    implementation(libs.hilt.android)
-//    ksp(libs.hilt.compiler)
-//    implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
 }
 
 

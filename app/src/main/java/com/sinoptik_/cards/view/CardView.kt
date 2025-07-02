@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,8 +46,11 @@ fun BankCardTemplate(
         modifier = Modifier
             .fillMaxWidth()
             //.width(340.dp)
-            .aspectRatio(340f/214f)
-            .padding(bottom = 5.dp),
+            .aspectRatio(340f / 214f)
+            .padding(
+                horizontal = 6.dp,
+                vertical = 3.dp
+            ),
 //            .height(214.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
@@ -166,20 +170,20 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
 
 
 
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(
-                        text = "EXPIRES",
-                        color = Color.White.copy(alpha = 0.7f),
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        text = card.expiryDate,
-                        color = Color.White,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
+//                Column(horizontalAlignment = Alignment.End) {
+//                    Text(
+//                        text = "EXPIRES",
+//                        color = Color.White.copy(alpha = 0.7f),
+//                        fontSize = 10.sp,
+//                        fontWeight = FontWeight.Medium
+//                    )
+//                    Text(
+//                        text = card.expiryDate,
+//                        color = Color.White,
+//                        fontSize = 14.sp,
+//                        fontWeight = FontWeight.Medium
+//                    )
+//                }
             }
         }
 

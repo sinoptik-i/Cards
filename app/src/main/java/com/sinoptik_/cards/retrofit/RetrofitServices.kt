@@ -1,7 +1,6 @@
 package com.sinoptik_.cards.retrofit
 
-import com.sinoptik_.cards.data.FullCard
-import retrofit2.Call
+import com.sinoptik_.cards.data.dto.FullCard
 import retrofit2.http.GET
 import retrofit2.http.Path
 

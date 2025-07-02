@@ -1,19 +1,43 @@
 package com.sinoptik_.cards.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Dao
+import androidx.room.Entity
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.PrimaryKey
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+
+
+@Entity(tableName = "cards")
 data class BankCard(
-    val cardBinNumber: String = "1234 5678",
-    val cardHolderName: String = "JOHN DOE",
-    val expiryDate: String = "12/28",
-    val cvv: String = "123",
-    val bankName: String = "PREMIER BANK",
-    val cardType: String = "VISA",
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "cardBinNumber") val cardBinNumber: String = "",
 
-    val country: String = "DK Denmark",
-    val latitude: String = "56",
-    val longitude: String = "10",
+    @ColumnInfo(name = "bankName") val bankName: String = "",
+    @ColumnInfo(name = "cardType") val cardType: String = "",
 
-    val url : String = "www.jyskebank.dk",
-    val phone : String = "+4589893300",
-    val city : String = "Herring",
+    @ColumnInfo(name = "country") val country: String = "",
+    @ColumnInfo(name = "latitude") val latitude: String = "",
+    @ColumnInfo(name = "longitude") val longitude: String = "",
 
-)
+    @ColumnInfo(name = "url") val url: String = "",
+    @ColumnInfo(name = "phone") val phone: String = "",
+    @ColumnInfo(name = "city") val city: String = "",
+
+    )
+@Dao
+interface CardDao{
+
+    @Query("SELECT * FROM cards")
+    fun getCards(): Flow<List<BankCard>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCard(bankCard: BankCard)
+
+    @Query("DELETE FROM cards")
+    suspend fun dropAll()
+
+
+}

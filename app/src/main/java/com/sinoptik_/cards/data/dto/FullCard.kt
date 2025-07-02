@@ -1,5 +1,6 @@
-package com.sinoptik_.cards.data
+package com.sinoptik_.cards.data.dto
 
+import com.sinoptik_.cards.data.BankCard
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
@@ -13,8 +14,17 @@ data class FullCard(
     @SerialName("brand") var brand: String? = null,
     @SerialName("prepaid") var prepaid: Boolean? = false,
     @SerialName("country") var country: Country? = Country(),
-
-//    "prepaid": false,
     @SerialName("bank") var bank: Bank? = Bank()
-
-)
+){
+    fun toBankCard(textBin: String)= BankCard(
+        cardBinNumber = textBin,
+        bankName = bank?.name ?: "",
+        cardType = scheme ?: "",
+        country = country?.name ?: "",
+        latitude = country?.latitude.toString() ?: "",
+        longitude = country?.longitude.toString() ?: "",
+        url = bank?.url ?: "",
+        phone = bank?.phone ?: "",
+        city = bank?.city ?: ""
+    )
+}
