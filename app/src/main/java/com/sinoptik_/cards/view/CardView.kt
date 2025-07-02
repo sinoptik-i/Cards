@@ -23,7 +23,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sinoptik_.cards.viewModels.CardViewVM
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,13 +44,11 @@ fun BankCardTemplate(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            //.width(340.dp)
             .aspectRatio(340f / 214f)
             .padding(
                 horizontal = 6.dp,
                 vertical = 3.dp
             ),
-//            .height(214.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
@@ -80,7 +77,7 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                 .padding(20.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Top section with bank name and card type
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -114,8 +111,6 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                 )
             }
 
-
-            // Card number
             Text(
                 text = card.cardBinNumber,
                 color = Color.White,
@@ -125,26 +120,10 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                 fontFamily = FontFamily.Monospace
             )
 
-
-            // Bottom section with name and expiry
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-//                Column {
-//                    Text(
-//                        text = "CARD HOLDER",
-//                        color = Color.White.copy(alpha = 0.7f),
-//                        fontSize = 10.sp,
-//                        fontWeight = FontWeight.Medium
-//                    )
-//                    Text(
-//                        text = card.cardHolderName,
-//                        color = Color.White,
-//                        fontSize = 14.sp,
-//                        fontWeight = FontWeight.Medium
-//                    )
-//                }
 
                 Column {
                     Text(
@@ -167,23 +146,6 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                     )
                 }
 
-
-
-
-//                Column(horizontalAlignment = Alignment.End) {
-//                    Text(
-//                        text = "EXPIRES",
-//                        color = Color.White.copy(alpha = 0.7f),
-//                        fontSize = 10.sp,
-//                        fontWeight = FontWeight.Medium
-//                    )
-//                    Text(
-//                        text = card.expiryDate,
-//                        color = Color.White,
-//                        fontSize = 14.sp,
-//                        fontWeight = FontWeight.Medium
-//                    )
-//                }
             }
         }
 

@@ -18,53 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllCardsVM @Inject constructor(
-    val cardRepository: CardRepository
+    cardRepository: CardRepository
 ) : ViewModel() {
-
-    private val _cards: MutableStateFlow<List<BankCard>> = MutableStateFlow(emptyList())
-
-    //    val cards = _cards.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     val cards = cardRepository.getCardsFlow()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
-
-
-//    fun loadCards() {
-//        viewModelScope.launch {
-//            _cards = cardRepository.getCardsFlow()
-//        }
-//    }
-
-    fun getTestCards() {
-        viewModelScope.launch {
-            val list = mutableListOf<BankCard>()
-            for (i in 1..7) {
-                list.add(
-                    createTestCard().copy(
-                        cardBinNumber = (10000000 * i).toString()
-                    )
-                )
-            }
-            delay(1000)
-            _cards.value = list
-        }
-    }
-
-    private fun createTestCard() =
-        BankCard(
-            cardBinNumber = "1234 5678",
-
-
-            bankName = "PREMIER BANK",
-            cardType = "VISA",
-
-            country = "DK Denmark",
-            latitude = "56",
-            longitude = "10",
-
-            url = "www.jyskebank.dk",
-            phone = "+4589893300",
-            city = "Herring",
-        )
-
-
 }

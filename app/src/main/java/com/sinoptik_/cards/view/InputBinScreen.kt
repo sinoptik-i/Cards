@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sinoptik_.cards.data.BankCard
-import com.sinoptik_.cards.data.dto.FullCard
 import com.sinoptik_.cards.view.components.InputTextField
 import com.sinoptik_.cards.viewModels.InputBinScreenVM
 
@@ -44,25 +43,26 @@ fun InputBinScreen(
     ) {
 
         var textBin by remember { viewmodel.textBin }
-        val cardState by viewmodel.card.collectAsStateWithLifecycle()
 
-        val syncState by viewmodel.state.collectAsStateWithLifecycle()
+        val loadState by viewmodel.loadState.collectAsStateWithLifecycle()
 
         Box {
-            when (syncState) {
+            when (loadState) {
                 is InProgress -> {
                     ProgressBar()
                 }
 
-                //trash
                 is Success -> {
-//                    val newCard = (syncState as Success<FullCard>).data.toBankCard(textBin)
-//                    viewmodel.cardRepository.insertCard(newCard)
-                    BankCardTemplate((syncState as Success<BankCard>).data)
+                    BankCardTemplate((loadState as Success<BankCard>).data)
                 }
 
                 is Failed -> {
-                    Text("${(syncState as Failed).throwable.message}")
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 30.dp),
+                        text = "${(loadState as Failed).throwable.message}"
+                    )
                 }
 
                 is UnUsed -> {}
@@ -76,11 +76,11 @@ fun InputBinScreen(
             }
         )
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp),
             onClick = {
-//                viewmodel.testLoadCard()
-//                viewmodel.loadCard()
-                viewmodel.loadState()
+                viewmodel.loadCard()
             },
 
             ) {

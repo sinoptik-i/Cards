@@ -1,6 +1,5 @@
 package com.sinoptik_.cards.viewModels
 
-import android.R.attr.country
 import android.util.Log
 import android.util.Log.e
 import androidx.compose.runtime.mutableStateOf
@@ -30,105 +29,95 @@ import javax.inject.Inject
 class InputBinScreenVM @Inject constructor(
     val cardRepository: CardRepository
 ) : ViewModel() {
-//    init {
+
+//    init{
 //        viewModelScope.launch {
 //            cardRepository.dropAll()
 //        }
 //    }
 
-    private val _card: MutableStateFlow<FullCard?> = MutableStateFlow(null)
+    //    45717360
+    val textBin = mutableStateOf("")
 
-    //    private val _textBin = mutableStateOf("")
-//    val textBin =  stateOf (_textBin)
-    val textBin = mutableStateOf("45717360")
-
-
-    val card = _card
-        .map {
-            it?.let {
-                try {
-                    val newCard = it.toBankCard(textBin.value)
-//                    val newCard = BankCard(
-//                        cardBinNumber = textBin.value,
-//                        bankName = it.bank?.name ?: "",
-//                        cardType = it.scheme ?: "",
-//                        country = it.country?.name ?: "",
-//                        latitude = it.country?.latitude.toString() ?: "",
-//                        longitude = it.country?.longitude.toString() ?: "",
-//                        url = it.bank?.url ?: "",
-//                        phone = it.bank?.phone ?: "",
-//                        city = it.bank?.city ?: ""
-//                    )
-                    cardRepository.insertCard(newCard)
-                    newCard
-                } catch (ex: Exception) {
-                    e("InputBinScreenVM", ex.message.toString())
-                    null
-                }
-            }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun loadCard() {
-        viewModelScope.launch {
-            try {
-                _card.value = Common.retrofitService.getCard(textBin.value)
-                Log.d("InputBinScreenVM", _card.value.toString())
-            } catch (e: IOException) {
-                Log.d("InputBinScreenVM", e.message.toString())
-                _card.value = null
-            } catch (e: Exception) {
-                _card.value = null
-                Log.d("InputBinScreenVM", e.message.toString())
-            }
-        }
+    fun String.isNumeric(): Boolean {
+        return this.all { it.isDigit() }
     }
 
-    fun testLoadCard() {
-        viewModelScope.launch {
-            delay(2000)
-            _card.value = FullCard()
-            e("InputBinScreenVM", textBin.value)
+    private fun checkBin(): Boolean {
+        if (5 < textBin.value.length && textBin.value.length < 9) {
+            if (textBin.value.isNumeric()) {
+                return true
+            }
+
         }
+        return false
     }
 
     //----------------------------------------------------------------
-    private val syncState: MutableStateFlow<LoadState<FullCard>> =
+    private val _loadState: MutableStateFlow<LoadState<FullCard>> =
         MutableStateFlow(UnUsed)
 
-    fun loadState() {
+    fun loadCard() {
         viewModelScope.launch {
-            try {
-                syncState.value = InProgress
-                delay(1000)
-                syncState.value = Success(Common.retrofitService.getCard(textBin.value))
-                Log.d("InputBinScreenVM", syncState.value.toString())
-            } catch (e: IOException) {
-                Log.d("InputBinScreenVM", e.message.toString())
-                syncState.value = Failed(
+            if (checkBin()) {
+                try {
+                    _loadState.value = InProgress
+                    delay(1000)
+                    val newCard = Common.retrofitService.getCard(textBin.value)
+                    Log.d("InputBinScreenVM", newCard.toString())
+                    if (newCard.scheme == null || newCard.bank?.name==null) {
+                        _loadState.value = Failed(
+                            Throwable(
+                                "card not found"
+                            )
+                        )
+                    } else {
+                        _loadState.value = Success(newCard)
+                    }
+                    Log.d("InputBinScreenVM", _loadState.value.toString())
+                } catch (e: IOException) {
+                    Log.d("InputBinScreenVM", e.message.toString())
+                    _loadState.value = Failed(
+                        Throwable(
+                            messagesForUser(e.message.toString())
+                        )
+                    )
+                } catch (e: Exception) {
+                    _loadState.value = Failed(
+                        Throwable(
+                            messagesForUser(e.message.toString())
+                        )
+                    )
+                    Log.d("InputBinScreenVM", e.message.toString())
+                }
+            } else {
+                _loadState.value = Failed(
                     Throwable(
-                        e.message.toString()
+                        "incorrect BIN"
                     )
                 )
-            } catch (e: Exception) {
-                syncState.value = Failed(
-                    Throwable(
-                        e.message.toString()
-                    )
-                )
-                Log.d("InputBinScreenVM", e.message.toString())
             }
         }
     }
 
+    private fun messagesForUser(message: String): String {
+        return if (message == "HTTP 429 ") {
+            "You have exceeded the rate limit of 5 requests/hour. Please wait a bit and try again."
+        } else if (message == "HTTP 400 ") {
+            "incorrect BIN"
+        } else {
+            message
+        }
+    }
 
-    val state = syncState
+
+    val loadState = _loadState
         .map {
             val bcState: LoadState<BankCard> = when (it) {
                 is InProgress -> InProgress
                 is Failed -> Failed(it.throwable)
                 is Success<FullCard> -> {
-                    val newCard = (it as Success<FullCard>).data.toBankCard(textBin.value)
+                    val newCard = it.data.toBankCard(textBin.value)
                     cardRepository.insertCard(newCard)
                     Success<BankCard>(newCard)
                 }
@@ -141,3 +130,4 @@ class InputBinScreenVM @Inject constructor(
 
 
 }
+
