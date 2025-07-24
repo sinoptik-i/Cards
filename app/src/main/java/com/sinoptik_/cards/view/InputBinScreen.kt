@@ -21,21 +21,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.AllCardsDestination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sinoptik_.cards.data.BankCard
 import com.sinoptik_.cards.view.components.InputTextField
 import com.sinoptik_.cards.viewModels.InputBinScreenVM
+//import com.ramcosta.composedestinations.generated.destinations.AllCardsDestination
 
-
+@Destination<RootGraph>(start = true)
 @Composable
 fun InputBinScreen(
-    paddingValues: PaddingValues,
+    id:Int=1,
+//    paddingValues: PaddingValues=Modifier.padding(1.dp),
+    navigator: DestinationsNavigator,
     viewmodel: InputBinScreenVM = hiltViewModel()
 ) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues),
+            .fillMaxSize(),
+//            .padding(paddingValues),
 //        .padding(5.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -86,6 +93,23 @@ fun InputBinScreen(
             ) {
             Text("Load Card Info")
         }
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp),
+            onClick = {
+                 navigator.navigate(
+                     AllCardsDestination()
+//                         id = 2,
+//                         groupName = "Kotlin programmers"
+//                     )
+                 )
+            },
+
+            ) {
+            Text("GOTO AllCards")
+        }
+
     }
 }
 

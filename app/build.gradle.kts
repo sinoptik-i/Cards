@@ -81,6 +81,12 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
+    implementation(libs.core)
+    ksp(libs.ksp)
+
+// V2 only: for bottom sheet destination support, also add
+    implementation(libs.bottom.sheet)
+
 }
 
 
