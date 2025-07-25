@@ -10,7 +10,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.sinoptik_.cards.view.bottomMenu.BottomMenu
 
 //@Destination<RootGraph>
 @Composable

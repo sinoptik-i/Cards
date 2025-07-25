@@ -11,6 +11,7 @@ import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.utils.currentDestinationAsState
+import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import com.ramcosta.composedestinations.utils.startDestination
 import com.sinoptik_.cards.view.bottomMenu.BottomMenuItem
 
@@ -18,8 +19,9 @@ import com.sinoptik_.cards.view.bottomMenu.BottomMenuItem
 @Composable
 fun BottomMenu2(
     navController: NavHostController,
-    destinationsNavigator: DestinationsNavigator
 ) {
+
+    val destinationsNavigator: DestinationsNavigator = navController.rememberDestinationsNavigator()
     val items = listOf(
         BottomMenuItem.Card,
         BottomMenuItem.Cards
@@ -32,7 +34,11 @@ fun BottomMenu2(
         items.forEach { item ->
             NavigationBarItem(
                 selected = currentDestination == item.route,
-                onClick = { onItemClick(item.route) },
+                onClick = {
+                    destinationsNavigator.navigate(item.route) {
+                        launchSingleTop = true
+                    }
+                },
                 icon = {
                     Icon(
                         painter = painterResource(

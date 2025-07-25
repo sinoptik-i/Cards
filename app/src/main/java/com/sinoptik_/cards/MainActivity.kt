@@ -13,6 +13,7 @@ import com.sinoptik_.cards.ui.theme.CardsTheme
 import com.sinoptik_.cards.view.AllCards
 import com.sinoptik_.cards.view.InputBinScreen
 import com.sinoptik_.cards.view.MainScreen
+import com.sinoptik_.cards.view.MainScreen2
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +26,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CardsTheme {
-                DestinationsNavHost(navGraph = NavGraphs.root)
+                MainScreen2()
+//                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }
