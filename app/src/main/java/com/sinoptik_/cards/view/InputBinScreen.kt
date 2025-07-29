@@ -3,7 +3,6 @@ package com.sinoptik_.cards.view
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,36 +22,25 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.AllCardsDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sinoptik_.cards.data.BankCard
 import com.sinoptik_.cards.view.components.InputTextField
 import com.sinoptik_.cards.viewModels.InputBinScreenVM
-//import com.ramcosta.composedestinations.generated.destinations.AllCardsDestination
+
 
 @Destination<RootGraph>(start = true)
 @Composable
 fun InputBinScreen(
-    id:Int=1,
-//    paddingValues: PaddingValues=Modifier.padding(1.dp),
-    navigator: DestinationsNavigator,
+    id: Int = 1,
     viewmodel: InputBinScreenVM = hiltViewModel()
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize(),
-//            .padding(paddingValues),
-//        .padding(5.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
-
     ) {
-
         var textBin by remember { viewmodel.textBin }
-
         val loadState by viewmodel.loadState.collectAsStateWithLifecycle()
-
         Box {
             when (loadState) {
                 is InProgress -> {
@@ -89,27 +77,9 @@ fun InputBinScreen(
             onClick = {
                 viewmodel.loadCard()
             },
-
-            ) {
+        ) {
             Text("Load Card Info")
         }
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 30.dp),
-            onClick = {
-                 navigator.navigate(
-                     AllCardsDestination()
-//                         id = 2,
-//                         groupName = "Kotlin programmers"
-//                     )
-                 )
-            },
-
-            ) {
-            Text("GOTO AllCards")
-        }
-
     }
 }
 

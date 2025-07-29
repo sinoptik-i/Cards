@@ -23,42 +23,18 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun AllCards(
     id:Int=2,
-//    paddingValues: PaddingValues,
-    navigator: DestinationsNavigator,
+
     viewModel: AllCardsVM = hiltViewModel()
 ) {
-//    val viewModel = AllCardsVM()
-//    viewModel.getTestCards()
-
     val cards by viewModel.cards.collectAsStateWithLifecycle()
-
-
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-//            .padding(paddingValues),
-//            .padding(5.dp),
     ) {
-        item{
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
-                onClick = {
-                     navigator.navigate(InputBinScreenDestination())
-                },
-
-                ) {
-                Text("GOTO AllCards")
-            }
-
-        }
         items(cards) { card ->
             BankCardTemplate(
                 card
             )
-
         }
-
     }
 }

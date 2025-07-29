@@ -1,4 +1,4 @@
-package com.sinoptik_.cards.view.bottom_menu_2
+package com.sinoptik_.cards.view.bottom_menu
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -13,14 +13,13 @@ import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import com.ramcosta.composedestinations.utils.startDestination
-import com.sinoptik_.cards.view.bottomMenu.BottomMenuItem
+import com.sinoptik_.cards.view.bottom_menu.BottomMenuItem
 
 
 @Composable
-fun BottomMenu2(
+fun BottomMenu(
     navController: NavHostController,
 ) {
-
     val destinationsNavigator: DestinationsNavigator = navController.rememberDestinationsNavigator()
     val items = listOf(
         BottomMenuItem.Card,
@@ -28,8 +27,6 @@ fun BottomMenu2(
     )
     val currentDestination: DestinationSpec = navController.currentDestinationAsState().value
         ?: NavGraphs.root.startDestination
-
-
     NavigationBar {
         items.forEach { item ->
             NavigationBarItem(

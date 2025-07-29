@@ -56,7 +56,6 @@ fun BankCardTemplate(
     }
 }
 
-
 @Composable
 private fun CardFrontSide(card: BankCard = BankCard()) {
     Box(
@@ -101,7 +100,6 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                         fontSize = 9.sp,
                     )
                 }
-
                 Text(
                     text = card.cardType,
                     color = Color.White,
@@ -110,7 +108,6 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                     fontFamily = FontFamily.Serif
                 )
             }
-
             Text(
                 text = card.cardBinNumber,
                 color = Color.White,
@@ -119,7 +116,6 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                 letterSpacing = 2.sp,
                 fontFamily = FontFamily.Monospace
             )
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -148,8 +144,6 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
 
             }
         }
-
-        // Decorative circles
         Box(
             modifier = Modifier
                 .size(60.dp)
@@ -159,7 +153,6 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
                     RoundedCornerShape(50)
                 )
         )
-
         Box(
             modifier = Modifier
                 .size(80.dp)
@@ -172,19 +165,3 @@ private fun CardFrontSide(card: BankCard = BankCard()) {
     }
 }
 
-
-//@Preview
-//@Composable
-//fun CardView() {
-//    val viewmodel = CardViewVM()
-//    val cardState by viewmodel.card.collectAsStateWithLifecycle()
-//    Button(
-//        onClick = { viewmodel.loadCard() },
-//    ) {}
-//
-//
-//
-//
-//    Log.d("test", cardState.toString())
-//
-//}
